@@ -1,0 +1,94 @@
+{% load static %}
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Todo list</title>
+
+        <!-- Bootstrap CSS -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link type="text/css" rel="stylesheet" href="{% static 'todolist.css' %}">
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.3/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <legend class="todoheadword">{{title}}</legend>
+         <div class="todo-cover">
+            <div class="list">
+                <div class="addTask">
+                    <div class="div">
+                        <form action="{% url 'todolist:addTask' %}" method="POST" class="add-form">
+                            {% csrf_token %}
+                            <input type="text" class="add" placeholder="add your task name here..." name="task_name">
+                            <button type="submit">Save</button>
+                        </form>
+                        <form method="get" action="{% url 'todolist:search_results' %}" class="search-form">
+                            <input type="text" class="search" name="q" placeholder="Search Task Status Here...">
+                            <button type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Created At</th>
+                                <th>Action</th>
+                                <th>Complete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for t in task %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{t.id}}</td>
+                                <td>
+                                    {% if t.status|to_int == 0 %}
+                                        {{t.task_name}}
+                                    {% elif t.status|to_int == 1 %}
+                                        <span class="line-through">{{t.task_name}}</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                        {{t.status}}
+                                </td>
+                                <td>{{t.created_at}}</td>
+                                <td>
+                                    <a href="{% url 'todolist:update' t.id %}"><i class="fa fa-edit"></i></a>
+                                    <a type="button" class="btn btn-danger" href="{% url 'todolist:delete' t.id %}"><i class="fa fa-trash"></i></a>
+                                </td>
+                                <td>
+                                    {% if t.status|to_int == 0 %}
+                                    <form action="{% url 'todolist:updateStatus' t.id %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="checkbox" value="1" name="status">
+                                        <button type="submit" class="mark-button">mark as complete</button>
+                                    </form>
+                                    {% elif t.status|to_int == 1 %}
+                                    <span class="text-success">completed</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    
+            </div>
+         </div>
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Bootstrap JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </body>
+</html>

@@ -1,0 +1,76 @@
+.todoheadword{
+    color: #000;
+    font-size: 800;
+    text-align: center;
+    font-size: 25px;
+}
+.todo-cover {
+    width: 100%;
+    padding: 50px;
+    position: relative;
+}
+.todo-cover .list{
+    text-align: left;
+    margin-left: auto;
+    margin-right:auto;
+    width:100%;
+    position: relative;
+}
+.line-through{
+    text-decoration: line-through;
+    color: silver;
+    opacity: 0.6;
+}
+.todo-button {
+    border: none;
+    background: aqua;
+    color: #000;
+    margin-left: 50%;
+    margin-right: auto;
+    margin-top: 50px;
+    padding: 5px;
+    border-radius: 5px;
+}
+.todo-button:hover{
+   color: #fff;
+   background: #000;
+}
+.mark-button{
+    border: none;
+    color: blue;
+    font-style: bold;
+}
+.todo-cover .div{
+    display: flex;
+    column-gap: 50px;
+}
+.div .add-form .add{
+   border: none;
+   background: silver;
+}
+.div .add-form button{
+    background: aqua;
+    color:#000;
+    border: none;
+}
+.add:focus{
+  outline: none;
+}
+.add::placeholder{
+    color:#fff;
+}
+.div .search-form .search{
+     border: none;
+     background: silver;
+}
+.div .search-form button{
+    border: none;
+    background: aqua;
+    color: #000;
+}
+.search:focus{
+    outline: none;
+}
+.search::placeholder{
+    color: #fff;
+}
